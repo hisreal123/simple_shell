@@ -18,7 +18,7 @@ int main(void)
 		return (-1);
 	}
 
-	printf("%zd : %s", count, line);
+	printf("%s", line);
 	free(line);
 	return (0);
 }
