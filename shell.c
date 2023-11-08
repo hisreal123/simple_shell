@@ -37,7 +37,7 @@ int main(void)
 			printf("Oops, forking error");
 		else if (child == 0)
 		{
-			args = cmd[0];
+			args = cmd;
 			argv[0] = cmd;
 			if (execve(args, argv, NULL) == -1)
 			{
