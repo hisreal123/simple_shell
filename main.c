@@ -2,11 +2,9 @@
 
 /**
 * main -  main function
-* Return: always 0
-*/
+* Return: always 0 */
 
-int main (void)
-{
-	printf("let's fucking go  \n");
-	return (0);
+int main() {
+    child_process(5);
+    return 0;
 }

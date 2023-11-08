@@ -10,15 +10,19 @@ int main(void)
 	size_t count = 0;
 	ssize_t read;
 
-	printf("$");
-	read = getline(&line, &count, stdin);
-	if (read < 0)
+	while (1)
 	{
-		free(line);
-		return (-1);
-	}
+		printf("$ ");
+		read = getline(&line, &count, stdin);
 
-	printf("%s", line);
-	free(line);
-	return (0);
+		if (read == -1)
+		{
+			free(line);
+			return (-1);
+		}
+
+		printf("%s", line);
+	}
+		free(line);
+		return (0);
 }
