@@ -39,6 +39,10 @@ int main(void)
 			printf("Oops, forking error");
 		else if (child == 0)
 		{
+<<<<<<< HEAD
+=======
+			args = cmd;
+>>>>>>> 9c944f6163cf81ee24d20373d2422f3680c05d2e
 			argv[0] = cmd;
 			if (execve(cmd, argv, NULL) == -1)
 			{
