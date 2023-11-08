@@ -7,28 +7,39 @@
 
 int main(void)
 {
-	char *cmd = NULL;
+	char *cmd = NULL, *args;
+	char *argv[] = {NULL};
 	int  status;
 	size_t read, count = 0;
 	pid_t child;
+
+	cmd = malloc(sizeof(char) * 100);
+	if (cmd == NULL)
+	{
+		printf("Memory allocation Error\n");
+		return (-1);
+	}
 
 	for (;;)
 	{
 		printf("($)");
 
 		read = getline(&cmd, &count, stdin);
-		if (read = -1)
+		if (read == -1)
 		{
 			free(cmd);
 			return (-1);
 		}
+		cmd[read - 1] = '\0';
 
 		child = fork();
 		if (child == -1)
 			printf("Oops, forking error");
 		else if (child == 0)
 		{
-			if (execve(cmd, &cmd, NULL) == -1)
+			args = cmd[0];
+			argv[0] = cmd;
+			if (execve(args, argv, NULL) == -1)
 			{
 				printf("Execve error\n");
 				return (-1);
@@ -38,5 +49,6 @@ int main(void)
 			wait(&status);
 	}
 
+	free(cmd);
 	return (0);
 }
