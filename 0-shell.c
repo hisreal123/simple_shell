@@ -24,7 +24,8 @@ int main(int argc, char *argv[], char *envp[])
 			printf("%s: 1: %s: not found", argv[argc - 1], cmd);
 		}
 	}
-	else
+
+	if (isatty(STDIN_FILENO))
 	{
 			for (;; loop++)
 		{
