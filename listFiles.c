@@ -3,8 +3,7 @@
 
 /**
 * main - list all files in the dir
-* Return: 0 if success, else -1
-*/
+* Return: 0 if success, else -1 */
 
 int listAll(void)
 {
@@ -12,7 +11,7 @@ int listAll(void)
 	char *const args[] = {lsPath, "-l", NULL};
 	char *const envp[] = {NULL};
 
-	if (execve(program, args, envp) == -1)
+	if (execve(lsPath, args, envp) == -1)
 	{
 		perror("execve");
 		return (1);
