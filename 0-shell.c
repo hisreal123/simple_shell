@@ -10,24 +10,12 @@
 
 int main(int argc, char *argv[], char *envp[])
 {
-	int check = 0, loop = 1;
-	char *cmd;
-	char *args[] = {NULL};
-
-	if (argc > 1)
-	{
-		cmd = argv[1];
-		args[0] = cmd;
-		if (execve(cmd, args, envp) == -1)
-		{
-			perror("execve failed");
-			printf("%s: 1: %s: not found", argv[argc - 1], cmd);
-		}
-	}
+	int check = 0, loop = 1, size = 100, index = 0;
+	char *cmd, line[size], ch, char *args[] = {NULL};
 
 	if (isatty(STDIN_FILENO))
 	{
-			for (;; loop++)
+		for (;; loop++)
 		{
 			check = get_input(&loop, argv[0], envp);
 
@@ -36,5 +24,21 @@ int main(int argc, char *argv[], char *envp[])
 		}
 	}
 
+	else (argc > 1)
+	{
+		while ((read(STDIN_FILENO, &ch, 1) == 1) && ch != '\n' && index < size - 1)
+			line[index++] = ch;
+		line[index] = '\0';
+
+		cmd = line;
+		args[0] = cmd;
+
+		if (execve(cmd, args, envp) == -1)
+		{
+			perror("execve failed");
+			printf("%s: 1: %s: not found", argv[argc - 1], cmd);
+			return (-1);
+		}
+	}
 	return (0);
 }
