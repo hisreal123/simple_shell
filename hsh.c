@@ -10,7 +10,7 @@
  * Return: empty
 */
 
-void fork_execute(int *loop, char *cmd, char **args, char *argv, char *envp)
+void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 {
 	pid_t child;
 	int status;
@@ -26,7 +26,7 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char *envp)
 	{
 		if (execve(args[0], args, envp) == -1)
 		{
-			printf("%s: %ls: %s: not found\n", argv, loop, args[0]);
+			printf("%s: %d: %s: not found\n", argv, *loop, args[0]);
 			free(cmd);
 			free(args);
 			return;
@@ -48,7 +48,7 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char *envp)
  * Return: empty
 */
 
-void process_command(int *loop, char *cmd, char *argv, char *envp)
+void process_command(int *loop, char *cmd, char *argv, char **envp)
 {
 	char *token = NULL, **args = NULL;
 	int num = 0;
@@ -81,7 +81,7 @@ void process_command(int *loop, char *cmd, char *argv, char *envp)
  * Return: 0 on success, -1 to end
 */
 
-int get_input(int *loop, char *argv, char *envp)
+int get_input(int *loop, char *argv, char **envp)
 {
 	size_t read, count;
 	char *cmd = NULL;
@@ -95,7 +95,7 @@ int get_input(int *loop, char *argv, char *envp)
 		return (0);
 	}
 
-	if (cmd[count - 1] = '\n')
+	if (cmd[count - 1] == '\n')
 		cmd[count - 1] = '\0';
 
 	if (strcmp(cmd, "") == 0)
@@ -138,5 +138,5 @@ int main(int argc, char *argv[], char *envp[])
 			break;
 	}
 
-	return (0)
+	return (0);
 }
