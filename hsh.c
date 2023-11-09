@@ -1,5 +1,9 @@
 #include "main.h"
 
+
+/**
+ * ls - function to
+*/
 /**
  * fork_execute - function to make child and execute command
  * @loop: number of times the program has run
@@ -134,7 +138,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	else
 	{
-			for (;;loop++)
+			for (;; loop++)
 		{
 			check = get_input(&loop, argv[0], envp);
 
