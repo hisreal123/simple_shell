@@ -5,6 +5,6 @@
 * Return: always 0 */
 
 int main() {
-    child_process(5);
-    return 0;
+	child_process(5);
+	return (0);
 }

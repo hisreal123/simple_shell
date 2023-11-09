@@ -27,41 +27,17 @@ int main(void)
 		}
 		cmd[read - 1] = '\0';
 
-		if (args != NULL)
-			free(args);
-		args = (char **)malloc(sizeof(char) * 100);
-		if (args == NULL)
-		{
-			printf("Memory allocation error\n");
-			free(args);
-			free(cmd);
-			return (0);
-		}
-
-		if (strcmp(cmd, "exit") == 0)
-		{
-			printf("Exiting shell...\n");
-			sleep(1);
-			free(cmd);
-			free(args);
-			return (0);
-		};
-
-		token = strtok(cmd, " ");
-		while (token)
-		{
-			args[num] = token;
-			token = strtok(NULL, " ");
-			num++;
-		}
-		args[num] = NULL;
+		if (cmd[0] == "exit")
+			break;
 
 		child = fork();
 		if (child == -1)
 			printf("Oops, forking error");
 		else if (child == 0)
 		{
-			if (execve(args[0], args, NULL) == -1)
+			args = cmd;
+			argv[0] = cmd;
+			if (execve(cmd, argv, NULL) == -1)
 			{
 				printf("Execve error\n");
 				free(cmd);
