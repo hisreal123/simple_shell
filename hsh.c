@@ -26,7 +26,7 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char *envp)
 	{
 		if (execve(args[0], args, envp) == -1)
 		{
-			printf("%s: %d: %s: not found\n", argv, loop, args[0]);
+			printf("%s: %ls: %s: not found\n", argv, loop, args[0]);
 			free(cmd);
 			free(args);
 			return;
@@ -78,10 +78,10 @@ void process_command(int *loop, char *cmd, char *argv, char *envp)
  * @loop: Number of times the program has run
  * @argv: pathname used to call shell
  * @envp: environment
- * Return: empty
+ * Return: 0 on success, -1 to end
 */
 
-void get_input(int *loop, char *argv, char *envp)
+int get_input(int *loop, char *argv, char *envp)
 {
 	size_t read, count;
 	char *cmd = NULL;
@@ -89,20 +89,30 @@ void get_input(int *loop, char *argv, char *envp)
 	printf("($) ");
 
 	read = getline(&cmd, &count, stdin);
-	if (read == -1 || cmd == "")
+	if (read == (size_t)-1)
 	{
 		free(cmd);
-		return;
+		return (0);
 	}
 
-	cmd[count - 1] = '\0';
+	if (cmd[count - 1] = '\n')
+		cmd[count - 1] = '\0';
+
+	if (strcmp(cmd, "") == 0)
+	{
+		free(cmd);
+		return (0);
+	}
+
 	if (strcmp(cmd, "exit") == 0)
 	{
 		free(cmd);
-		return;
+		return (-1);
 	}
 
 	process_command(loop, cmd, argv, envp);
+
+	return (0);
 }
 
 /**
@@ -113,12 +123,20 @@ void get_input(int *loop, char *argv, char *envp)
  * Return: 0 if it ends, -1 for error
 */
 
-int main(int argc, char *argv[], char *envp)
+int main(int argc, char *argv[], char *envp[])
 {
-	int loop = 0;
+	int check = 0, loop = 0;
+
+	if (argc != 1)
+		printf("Wrong format\n");
 
 	for (;;loop++)
 	{
-		get_input(&loop, argv[0], envp);
+		check = get_input(&loop, argv[0], envp);
+
+		if (check == -1)
+			break;
 	}
+
+	return (0)
 }
