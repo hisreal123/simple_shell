@@ -120,7 +120,7 @@ int get_input(int *loop, char *argv, char **envp)
  * @argc: argument count
  * @argv: argument vectors
  * @envp: environment vector
- * Return: 0 if it ends, -1 for error
+ * Return: 0 if it ends, -1 to stop
 */
 
 int main(int argc, char *argv[], char *envp[])
@@ -135,7 +135,7 @@ int main(int argc, char *argv[], char *envp[])
 		check = get_input(&loop, argv[0], envp);
 
 		if (check == -1)
-			break;
+			return (-1);
 	}
 
 	return (0);
