@@ -7,23 +7,18 @@
 
 int main(void)
 {
-	char *cmd = NULL;
-	char *argv[] = {NULL};
-	int  status;
+	char *cmd = NULL, *token, **args = NULL;
+	int  status, num = 0;
 	size_t read, count = 0;
 	pid_t child;
 
-	cmd = malloc(sizeof(char) * 100);
-	if (cmd == NULL)
-	{
-		printf("Memory allocation Error\n");
-		return (-1);
-	}
-
+	printf("Opening shell...\n");
+	sleep(1);
 	for (;;)
 	{
-		printf("($)");
-
+		printf("($$)");
+		if (cmd != NULL)
+			free(cmd);
 		read = getline(&cmd, &count, stdin);
 		if (read == -1)
 		{
@@ -31,29 +26,59 @@ int main(void)
 			return (-1);
 		}
 		cmd[read - 1] = '\0';
-		if (cmd[0] == "exit")
-			break;
+
+		if (args != NULL)
+			free(args);
+		args = (char **)malloc(sizeof(char) * 100);
+		if (args == NULL)
+		{
+			printf("Memory allocation error\n");
+			free(args);
+			free(cmd);
+			return (0);
+		}
+
+		if (strcmp(cmd, "exit") == 0)
+		{
+			printf("Exiting shell...\n");
+			sleep(1);
+			free(cmd);
+			free(args);
+			return (0);
+		};
+
+		token = strtok(cmd, " ");
+		while (token)
+		{
+			args[num] = token;
+			token = strtok(NULL, " ");
+			num++;
+		}
+		args[num] = NULL;
 
 		child = fork();
 		if (child == -1)
 			printf("Oops, forking error");
 		else if (child == 0)
 		{
-<<<<<<< HEAD
-=======
-			args = cmd;
->>>>>>> 9c944f6163cf81ee24d20373d2422f3680c05d2e
-			argv[0] = cmd;
-			if (execve(cmd, argv, NULL) == -1)
+			if (execve(args[0], args, NULL) == -1)
 			{
 				printf("Execve error\n");
+				free(cmd);
+				free(args);
 				return (-1);
 			}
 		}
 		else
+		{
+			sleep(1);
+			printf("Loading...\n");
+			sleep(1);
 			wait(&status);
+			sleep(1);
+		}
+		num = 0;
 	}
 
-	free(cmd);
 	return (0);
 }
