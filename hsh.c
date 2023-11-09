@@ -1,9 +1,5 @@
 #include "main.h"
 
-
-/**
- * ls - function to
-*/
 /**
  * fork_execute - function to make child and execute command
  * @loop: number of times the program has run
