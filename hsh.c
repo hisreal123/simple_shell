@@ -29,7 +29,6 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 			printf("%s: %d: %s: not found\n", argv, *loop, args[0]);
 			free(cmd);
 			free(args);
-			return;
 		}
 	}
 	else
@@ -127,15 +126,21 @@ int main(int argc, char *argv[], char *envp[])
 {
 	int check = 0, loop = 1;
 
-	if (argc != 1)
-		printf("Wrong format\n");
-
-	for (;;loop++)
+	if (argc > 1)
 	{
-		check = get_input(&loop, argv[0], envp);
+		if (execve(argv[argc], argv, envp) == -1)
+			printf("%s: 1: %s: not found\n", argv[argc], *argv);
+	}
 
-		if (check == -1)
-			return (-1);
+	else
+	{
+			for (;;loop++)
+		{
+			check = get_input(&loop, argv[0], envp);
+
+			if (check == -1)
+				return (-1);
+		}
 	}
 
 	return (0);
