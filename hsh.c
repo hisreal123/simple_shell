@@ -95,8 +95,8 @@ int get_input(int *loop, char *argv, char **envp)
 		return (0);
 	}
 
-	if (cmd[count - 1] == '\n')
-		cmd[count - 1] = '\0';
+	if (cmd[read - 1] == '\n')
+		cmd[read - 1] = '\0';
 
 	if (strcmp(cmd, "") == 0)
 	{
@@ -125,7 +125,7 @@ int get_input(int *loop, char *argv, char **envp)
 
 int main(int argc, char *argv[], char *envp[])
 {
-	int check = 0, loop = 0;
+	int check = 0, loop = 1;
 
 	if (argc != 1)
 		printf("Wrong format\n");
