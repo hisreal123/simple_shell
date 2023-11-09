@@ -11,13 +11,18 @@
 int main(int argc, char *argv[], char *envp[])
 {
 	int check = 0, loop = 1;
-	char *cmd = argv[1];
-	char*args[] = {cmd, NULL};
+	char *cmd;
+	char *args[] = {NULL};
 
 	if (argc > 1)
 	{
+		cmd = argv[1];
+		args[0] = cmd;
 		if (execve(cmd, args, envp) == -1)
+		{
+			perror("execve failed");
 			printf("%s: 1: %s: not found", argv[argc - 1], cmd);
+		}
 	}
 	else
 	{
