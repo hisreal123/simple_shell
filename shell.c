@@ -7,7 +7,7 @@
 
 int main(void)
 {
-	char *cmd = NULL, *token, *args = NULL;
+	char *cmd = NULL, *token, **args = NULL;
 	int  status, num = 0;
 	size_t read, count = 0;
 	pid_t child;
@@ -33,7 +33,7 @@ int main(void)
         	if (args != NULL)
         		free(args);
 
-		args = (char *)malloc(sizeof(char *) * 100);
+		args = (char **)malloc(sizeof(char *) * 100);
         	if (args == NULL)
         	{
         		printf("Memory allocation error\n");
@@ -64,7 +64,7 @@ int main(void)
             		printf("Oops, forking error");
         	else if (child == 0)
         	{
-			if (execve(args[0], &args, NULL) == -1)
+			if (execve(args[0], args, NULL) == -1)
         		{
                 		printf("Error\n");
                 		return (-1);
