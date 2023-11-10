@@ -25,14 +25,7 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 	else if (child == 0)
 	{
 		if (strcmp(args[0], "env") == 0)
-		{
-			while (*envp)
-			{
-				printf("%s\n", *envp);
-				envp++;
-			}
-			kill(getpid(), SIGTERM);
-		}
+			get_env(envp);
 		else
 		{
 			if (strcmp(args[0], "ls") == 0)

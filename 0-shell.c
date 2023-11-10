@@ -10,8 +10,7 @@
 
 int main(int argc, char *argv[], char *envp[])
 {
-	int check = 0, loop = 1, index = 0;
-	char *cmd, line[100], ch, *args[2] = {NULL};
+	int check = 0, loop = 1;
 
 	if (isatty(STDIN_FILENO))
 	{
@@ -25,20 +24,6 @@ int main(int argc, char *argv[], char *envp[])
 	}
 
 	else
-	{
-		while ((read(STDIN_FILENO, &ch, 1) == 1) && ch != '\n' && index < 99)
-			line[index++] = ch;
-		line[index] = '\0';
-
-		cmd = line;
-		args[0] = cmd;
-
-		if (execve(cmd, args, envp) == -1)
-		{
-			perror("execve failed");
-			printf("%s: 1: %s: not found\n", argv[argc - 1], cmd);
-			return (-1);
-		}
-	}
+		non_interactive(envp);
 	return (0);
 }

@@ -13,7 +13,7 @@ int get_input(int *loop, char *argv, char **envp)
 	size_t read, count;
 	char *cmd = NULL;
 
-	printf("($) ");
+	printf("($Hell) ");
 
 	read = getline(&cmd, &count, stdin);
 	if (read == (size_t)-1)
@@ -25,19 +25,18 @@ int get_input(int *loop, char *argv, char **envp)
 	if (cmd[read - 1] == '\n')
 		cmd[read - 1] = '\0';
 
-	if (strcmp(cmd, "") == 0)
+	if (*cmd == "")
 	{
 		free(cmd);
 		return (0);
 	}
 
-	if (strcmp(cmd, "exit") == 0)
+	if (*cmd == "exit")
 	{
 		free(cmd);
 		return (-1);
 	}
 
 	process_command(loop, cmd, argv, envp);
-
 	return (0);
 }
