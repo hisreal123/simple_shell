@@ -24,6 +24,6 @@ int main(int argc, char *argv[], char *envp[])
 	}
 
 	else
-		non_interactive(envp);
+		non_interactive(argv[argc - 1], envp);
 	return (0);
 }

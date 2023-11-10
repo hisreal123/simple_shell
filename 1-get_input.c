@@ -25,13 +25,13 @@ int get_input(int *loop, char *argv, char **envp)
 	if (cmd[read - 1] == '\n')
 		cmd[read - 1] = '\0';
 
-	if (*cmd == "")
+	if (strcomp(cmd, "") == 0)
 	{
 		free(cmd);
 		return (0);
 	}
 
-	if (*cmd == "exit")
+	if (strcomp(cmd, "exit") == 0)
 	{
 		free(cmd);
 		return (-1);

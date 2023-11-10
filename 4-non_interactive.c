@@ -3,12 +3,13 @@
 /**
  * non_interactive - function to process non-in commands
  * @envp: passed environment
+ * @argv: pathname used to call shell
  * Return: empty
 */
 
-void non_interactive(char **envp)
+void non_interactive(char *argv, char **envp)
 {
-	char line[100], ch, *cmd, *args[2] = NULL;
+	char line[100], ch, *cmd, *args[2] = {NULL};
 	int index = 0;
 
 	while ((read(STDIN_FILENO, &ch, 1) == 1) && ch != '\n' && index < 99)
@@ -22,7 +23,7 @@ void non_interactive(char **envp)
 	if (execve(cmd, args, envp) == -1)
 	{
 		perror("execve failed");
-		printf("%s: 1: %s: not found\n", argv[argc - 1], cmd);
+		printf("%s: 1: %s: not found\n", argv, cmd);
 		return;
 	}
 }
