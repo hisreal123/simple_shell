@@ -9,8 +9,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp);
-void process_command(int *loop, char *cmd, char *argv, char **envp);
+int fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp);
+int process_command(int *loop, char *cmd, char *argv, char **envp);
 int get_input(int *loop, char *argv, char **envp);
 
 

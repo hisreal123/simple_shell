@@ -6,10 +6,10 @@
  * @cmd: pointer to the input command
  * @argv: pathname used to call shell
  * @envp: environment
- * Return: empty
+ * Return: 0 on success, -1 if forced exit
 */
 
-void process_command(int *loop, char *cmd, char *argv, char **envp)
+int process_command(int *loop, char *cmd, char *argv, char **envp)
 {
 	char *token = NULL, **args = NULL;
 	int num = 0;
@@ -19,7 +19,7 @@ void process_command(int *loop, char *cmd, char *argv, char **envp)
 	{
 		free(args);
 		free(cmd);
-		return;
+		return (-1);
 	}
 
 	token = strtok(cmd, " ");
@@ -31,5 +31,8 @@ void process_command(int *loop, char *cmd, char *argv, char **envp)
 	}
 	args[num] = NULL;
 
-	fork_execute(loop, cmd, args, argv, envp);
+	if (fork_execute(loop, cmd, args, argv, envp) == -1)
+		return (-1);
+	
+	return (0);
 }
