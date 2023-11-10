@@ -37,6 +37,9 @@ int get_input(int *loop, char *argv, char **envp)
 		return (-1);
 	}
 
+	if (strcomp(cmd[0], "exit") == 0)
+		return(exit_status(cmd[1]));
+
 	process_command(loop, cmd, argv, envp);
 	return (0);
 }

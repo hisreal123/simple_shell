@@ -18,8 +18,10 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			check = get_input(&loop, argv[0], envp);
 
-			if (check != 0)
+			if (check > 0)
 				exit(check);
+			if (check == -1)
+				return (0)
 		}
 	}
 

@@ -15,6 +15,7 @@ int get_input(int *loop, char *argv, char **envp);
 void non_interactive(char *argv, char **envp);
 void get_env(char **envp);
 int strcomp(char *s1, char *s2);
+int exit_status(char *value);
 
 
 #endif
