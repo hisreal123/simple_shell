@@ -24,15 +24,27 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 	}
 	else if (child == 0)
 	{
-		if (strcmp(args[0], "ls") == 0)
-			args[0] = "/bin/ls";
-		if (strcmp(args[0], "pwd") == 0)
-			args[0] = "/bin/pwd";
-		if (execve(args[0], args, envp) == -1)
+		if (strcmp(args[0], "env") == 0)
 		{
-			printf("%s: %d: %s: not found\n", argv, *loop, args[0]);
-			free(cmd);
-			free(args);
+			while(*envp)
+			{
+				printf("%s\n", *envp);
+				envp++;
+			}
+		}
+		else
+		{
+			if (strcmp(args[0], "ls") == 0)
+				args[0] = "/bin/ls";
+			if (strcmp(args[0], "pwd") == 0)
+				args[0] = "/bin/pwd";
+			if (execve(args[0], args, envp) == -1)
+			{
+				call_error(argv, loop, args[0]);
+				printf("%s: %d: %s: not found\n", argv, *loop, args[0]);
+				free(cmd);
+				free(args);
+			}
 		}
 	}
 	else
