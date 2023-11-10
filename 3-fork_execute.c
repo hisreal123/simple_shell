@@ -31,6 +31,7 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 				printf("%s\n", *envp);
 				envp++;
 			}
+			kill(getpid(), SIGTERM);
 		}
 		else
 		{
@@ -40,10 +41,10 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 				args[0] = "/bin/pwd";
 			if (execve(args[0], args, envp) == -1)
 			{
-				call_error(argv, loop, args[0]);
 				printf("%s: %d: %s: not found\n", argv, *loop, args[0]);
 				free(cmd);
 				free(args);
+				kill(getpid(), SIGTERM);
 			}
 		}
 	}
