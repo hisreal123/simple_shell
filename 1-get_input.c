@@ -37,8 +37,7 @@ int get_input(int *loop, char *argv, char **envp)
 		return (-1);
 	}
 
-	if (process_command(loop, cmd, argv, envp) == -1)
-		return (0);
+	process_command(loop, cmd, argv, envp);
 
 	return (0);
 }

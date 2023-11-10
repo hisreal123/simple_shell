@@ -9,7 +9,7 @@
  * Return: 0 on success, -1 if forced exit
 */
 
-int process_command(int *loop, char *cmd, char *argv, char **envp)
+void process_command(int *loop, char *cmd, char *argv, char **envp)
 {
 	char *token = NULL, **args = NULL;
 	int num = 0;
@@ -19,7 +19,7 @@ int process_command(int *loop, char *cmd, char *argv, char **envp)
 	{
 		free(args);
 		free(cmd);
-		return (-1);
+		return;
 	}
 
 	token = strtok(cmd, " ");
@@ -31,8 +31,5 @@ int process_command(int *loop, char *cmd, char *argv, char **envp)
 	}
 	args[num] = NULL;
 
-	if (fork_execute(loop, cmd, args, argv, envp) == -1)
-		return (-1);
-	
-	return (0);
+	fork_execute(loop, cmd, args, argv, envp);
 }

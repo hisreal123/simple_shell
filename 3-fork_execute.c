@@ -10,7 +10,7 @@
  * Return: 0 on success, -1 if foced exit
 */
 
-int fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
+void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 {
 	pid_t child;
 	int status;
@@ -20,18 +20,18 @@ int fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 	{
 		free(cmd);
 		free(args);
-		return (-1);
+		return;
 	}
 	else if (child == 0)
 	{
 		if (strcmp(args[0], "env") == 0)
 		{
-			while(*envp)
+			while (*envp)
 			{
 				printf("%s\n", *envp);
 				envp++;
 			}
-			return (-1);
+			kill(getpid(), SIGTERM);
 		}
 		else
 		{
@@ -41,14 +41,15 @@ int fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 				args[0] = "/bin/pwd";
 			if (execve(args[0], args, envp) == -1)
 			{
-				printf("%s: %d: %s: not found\n", argv, *loop, args[0]);
+				printf("%s: %d: %s: no such command, file or"
+						"directory\n", argv, *loop, args[0]);
 				free(cmd);
 				free(args);
-				return (-1);
+				kill(getpid(), SIGTERM);
 			}
 		}
 	}
 	else
 		wait(&status);
-	return (0);
+
 }
