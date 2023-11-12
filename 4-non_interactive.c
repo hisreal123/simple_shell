@@ -10,7 +10,8 @@
 void non_interactive(char *argv, char **envp)
 {
 	char line[100], ch, *cmd, *args[100] = {NULL};
-	int index = 0, num = 0;
+	int index = 0;
+	long unsigned int num = 0;
 
 	while ((read(STDIN_FILENO, &ch, 1) == 1) && ch != '\n' && index < 99)
 			line[index++] = ch;

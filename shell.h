@@ -8,6 +8,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp);
 void process_command(int *loop, char *cmd, char *argv, char **envp);
@@ -16,6 +17,7 @@ void non_interactive(char *argv, char **envp);
 void get_env(char **envp);
 int strcomp(char *s1, char *s2);
 int exit_status(char *value);
+size_t getlin(char **mem, size_t *len, FILE *line);
 
 
 #endif

@@ -21,7 +21,7 @@ int main(int argc, char *argv[], char *envp[])
 			if (check > 0)
 				exit(check);
 			if (check == -1)
-				return (0)
+				return (0);
 		}
 	}
 

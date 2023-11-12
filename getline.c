@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * main - print copy of text on the next line
  * Return: 0 if success, else -1
@@ -13,7 +13,7 @@ int main(void)
 	while (1)
 	{
 		printf("$ ");
-		read = getline(&line, &count, stdin);
+		read = getlin(&line, &count, stdin);
 
 		if (read == -1)
 		{
