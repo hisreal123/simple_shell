@@ -15,7 +15,7 @@ int get_input(int *loop, char *argv, char **envp)
 
 	printf("($Hell) ");
 
-	read = getline(&cmd, &count, stdin);
+	read = getlin(&cmd, &count, stdin);
 	if (read == (size_t)-1)
 	{
 		free(cmd);
