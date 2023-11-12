@@ -10,14 +10,35 @@
 
 size_t getlin(char **mem, size_t *len, FILE *line)
 {
-	size_t count, op;
+	size_t count = 0;
+	int fed = 0;
 
-	mem = malloc(sizeof(line));
+	if (*line == NULL || *len == 0)
+	{
+		*len = 100;
+		*line = (char *)malloc(*len);
+		if (*line == NULL)
+			return (-1);
+	}
 
-	op = open(line, O_RDONLY);
+	while ((fed = getc(line)) != EOF)
+	{
+		if (count < *len - 1)
+		{
+			*len *= 2;
+			*line = (char *)realloc(*line, *len);
+			if (*line == NULL)
+				return (-1);
+		}
+	(*line)[i++] = (char)fed;
 
-	if (read(op, mem, count) == -1)
+	if(fed == '\n')
+		break;
+	}
+
+	(*line)[count] = '\0';
+	if (count == 0 && fed == EOF)
 		return (-1);
 
-	return (*len);
+	return (count);
 }

@@ -10,8 +10,9 @@
 void non_interactive(char *argv, char **envp)
 {
 	char line[100], ch, *cmd, *args[100] = {NULL};
-	int index = 0;
+	int index = 0, loop = 1, ln = 0, status;
 	long unsigned int num = 0;
+	pid_t child;
 
 	while ((read(STDIN_FILENO, &ch, 1) == 1) && ch != '\n' && index < 99)
 			line[index++] = ch;
@@ -24,10 +25,19 @@ void non_interactive(char *argv, char **envp)
 		cmd = strtok(NULL, " ");
 	}
 
-	if (execve(args[0], args, envp) == -1)
+	for (;; loop++, ln++)
 	{
-		perror("execve failed");
-		printf("%s: 1: %s: not found\n", argv, cmd);
-		return;
+		child = fork();
+		if (child == -1)
+			return;
+		if (execve(args[ln], args, envp) == -1)
+		{
+			perror("execve failed");
+			printf("%s: %d: %s: not found\n", argv, loop, cmd);
+			kill(getpid(), SIGTERM);
+		}
+		else
+			wait(&status);
+		*args = *(args + 1);
 	}
 }
