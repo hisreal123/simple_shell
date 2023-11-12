@@ -18,6 +18,7 @@ void get_env(char **envp);
 int strcomp(char *s1, char *s2);
 int exit_status(char *value);
 size_t getlin(char **mem, size_t *len, FILE *line);
+void fork_child(char **args, int *loop, char *cmd, char *argv, char **envp);
 
 
 #endif

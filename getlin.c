@@ -13,12 +13,15 @@ size_t getlin(char **mem, size_t *len, FILE *line)
 	size_t count = 0;
 	int fed = 0;
 
-	if (*line == NULL || *len == 0)
+	if (*mem == NULL || *len == 0)
 	{
 		*len = 100;
-		*line = (char *)malloc(*len);
-		if (*line == NULL)
+		*mem = (char *)malloc(*len);
+		if (*mem == NULL)
+		{
+			perror("Memory allocation error");
 			return (-1);
+		}
 	}
 
 	while ((fed = getc(line)) != EOF)
@@ -26,17 +29,20 @@ size_t getlin(char **mem, size_t *len, FILE *line)
 		if (count < *len - 1)
 		{
 			*len *= 2;
-			*line = (char *)realloc(*line, *len);
-			if (*line == NULL)
+			*mem = (char *)realloc(*mem, *len);
+			if (*mem == NULL)
+			{
+				perror("Memory allocation error");
 				return (-1);
+			}
 		}
-	(*line)[i++] = (char)fed;
+		(*mem)[count++] = (char)fed;
 
-	if(fed == '\n')
-		break;
+		if(fed == '\n')
+			break;
 	}
 
-	(*line)[count] = '\0';
+	(*mem)[count] = '\0';
 	if (count == 0 && fed == EOF)
 		return (-1);
 

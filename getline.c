@@ -21,7 +21,7 @@ int main(void)
 			return (-1);
 		}
 
-		printf("%s", line);
+		printf("Line: %s", line);
 	}
 		free(line);
 		return (0);
