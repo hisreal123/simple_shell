@@ -22,7 +22,11 @@ void non_interactive(char *argv, char **envp)
 	{
 		args[num] = cmd;
 		cmd = strtok(NULL, " ");
+		num++;
 	}
+
+	if (args[0] == NULL)
+		return;
 
 	if (execve(args[0], args, envp) == -1)
 		printf("%s: 1: %s: not found\n", argv, args[0]);
