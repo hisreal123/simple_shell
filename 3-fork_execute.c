@@ -13,7 +13,7 @@
 void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 {
 	pid_t child;
-	int status;
+	int status, stat = 0;
 
 	child = fork();
 	if (child == -1)
@@ -21,6 +21,11 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 		free(cmd);
 		free(args);
 		return;
+	}
+	if (strcomp(args[0], "exit") == 0)
+	{
+		stat = atoi(args[1]);
+		exit(stat);
 	}
 	else if (child == 0)
 		fork_child(args, loop, cmd, argv, envp);

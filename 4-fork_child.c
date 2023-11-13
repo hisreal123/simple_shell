@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * fork_child - function to execute child process
@@ -7,8 +7,6 @@
 
 void fork_child(char **args, int *loop, char *cmd, char *argv, char **envp)
 {
-	int stat = 0
-
 	if (strcomp(args[0], "env") == 0)
 			get_env(envp);
 	else
@@ -17,11 +15,6 @@ void fork_child(char **args, int *loop, char *cmd, char *argv, char **envp)
 			args[0] = "/bin/ls";
 		if (strcomp(args[0], "pwd") == 0)
 			args[0] = "/bin/pwd";
-		if (strcomp(args[0], "exit") == 0)
-		{
-			stat = atoi(args[1]);
-			exit(stat);
-		}
 		if (execve(args[0], args, envp) == -1)
 		{
 			printf("%s: %d: %s: no such command, file or"
