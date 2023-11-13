@@ -17,7 +17,7 @@ void fork_child(char **args, int *loop, char *cmd, char *argv, char **envp)
 			args[0] = "/bin/pwd";
 		if (execve(args[0], args, envp) == -1)
 		{
-			printf("%s: %d: %s: no such command, file or"
+			printf("%s: %d: %s: no such command, file or "
 					"directory\n", argv, *loop, args[0]);
 			free(cmd);
 			free(args);

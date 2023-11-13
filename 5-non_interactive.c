@@ -13,7 +13,7 @@ void non_interactive(char *argv, char **envp)
 	int index = 0;
 	long unsigned int num = 0;
 
-	while ((read(STDIN_FILENO, &ch, 1) == 1) && ch != '\n' && index < 99)
+	while ((read(STDIN_FILENO, &ch, 1) == 1) && index < 99)
 			line[index++] = ch;
 	line[index] = '\0';
 
@@ -24,9 +24,11 @@ void non_interactive(char *argv, char **envp)
 		cmd = strtok(NULL, " ");
 	}
 
+	if (strcomp(args[0], "") == 0 | strcomp(args[0], "	") == 0)
+		return;
+
 	if (execve(args[0], args, envp) == -1)
 	{
-		perror("execve failed");
 		printf("%s: 1: %s: not found\n", argv, args[0]);
 		kill(getpid(), SIGTERM);
 	}
