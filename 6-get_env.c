@@ -6,13 +6,9 @@
  * Return: empty
 */
 
-void get_env(char **envp)
+char **get_env(char **env)
 {
-	while (*envp)
-	{
-		printf("%s\n", *envp);
-		envp++;
-	}
+	getenv(env);
 
-	kill(getpid(), SIGTERM);
+	return (env);
 }

@@ -5,16 +5,20 @@
  * Return: empty
 */
 
-void fork_child(char **args, int *loop, char *cmd, char *argv, char **envp)
+void fork_child(char **arg, int *loop, char *argv)
 {
 	pid_t child;
 	int status = 0;
+	char **env;
+
+	env = get_env(env);
+	if (strcomp(arg[0], "ls") == 0)
+		arg[0] = "/bin/ls";
 
 	child = fork();
 	if (child == -1)
 	{
-		free(cmd);
-		free(args);
+		free(arg);
 		return;
 	}
 
@@ -23,15 +27,11 @@ void fork_child(char **args, int *loop, char *cmd, char *argv, char **envp)
 
 	else
 	{
-		if (strcomp(args[0], "env") == 0)
-			get_env(envp);
-
-		if (execve(args[0], args, envp) == -1)
+		if (execve(arg[0], arg, env) == -1)
 		{
 			printf("%s: %d: %s: no such file or "
-					"directory\n", argv, *loop, args[0]);
-			free(cmd);
-			free(args);
+					"directory\n", argv, *loop, arg[0]);
+			free(arg);
 			kill(getpid(), SIGTERM);
 		}
 	}

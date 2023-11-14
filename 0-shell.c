@@ -16,7 +16,7 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		for (;; loop++)
 		{
-			check = get_input(&loop, argv[0], envp);
+			check = get_input(&loop, argv[0]);
 
 			if (check == -1)
 				return (0);

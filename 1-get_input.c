@@ -8,12 +8,13 @@
  * Return: 0 on success, -1 to end
 */
 
-int get_input(int *loop, char *argv, char **envp)
+int get_input(int *loop, char *argv)
 {
 	size_t read, count;
-	char *cmd = NULL;
+	char *cmd = NULL, cwd;
 
-	printf("($Hell) ");
+	getwd(cwd);
+	printf("($Hell:%s) ", cwd);
 
 	read = getlin(&cmd, &count, stdin);
 	if (read == (size_t)-1)
@@ -37,6 +38,6 @@ int get_input(int *loop, char *argv, char **envp)
 		return (-1);
 	}
 
-	process_command(loop, cmd, argv, envp);
+	process_command(loop, argv);
 	return (0);
 }

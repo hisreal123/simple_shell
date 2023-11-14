@@ -10,16 +10,19 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
-void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp);
-void process_command(int *loop, char *cmd, char *argv, char **envp);
-int get_input(int *loop, char *argv, char **envp);
+void fork_execute(int *loop, char *cmd, char **args, char *argv);
+void process_command(int *loop, char *cmd, char *argv);
+int get_input(int *loop, char *argv);
 void non_interactive(char *argv, char **envp);
-void get_env(char **envp);
+char **get_env(char **env);
 int strcomp(char *s1, char *s2);
 int exit_status(char *value);
 size_t getlin(char **mem, size_t *len, FILE *line);
-void fork_child(char **args, int *loop, char *cmd, char *argv, char **envp);
+void fork_child(char **args, int *loop, char *cmd, char *argv);
 char *strtk(char *str, const char *delim);
+void _chdir(const char *path);
+int commands(char **arg);
+
 
 
 #endif

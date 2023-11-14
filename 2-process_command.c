@@ -9,7 +9,7 @@
  * Return: 0 on success, -1 if forced exit
 */
 
-void process_command(int *loop, char *cmd, char *argv, char **envp)
+void process_command(int *loop, char *cmd, char *argv)
 {
 	char *token = NULL, **args = NULL;
 	int num = 0;
@@ -30,6 +30,7 @@ void process_command(int *loop, char *cmd, char *argv, char **envp)
 		num++;
 	}
 	args[num] = NULL;
+	free(cmd);
 
-	fork_execute(loop, cmd, args, argv, envp);
+	fork_execute(loop, args, argv);
 }
