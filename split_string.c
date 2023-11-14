@@ -10,7 +10,7 @@ char *split_string(char *string, const char *delim)
 {
 	char *token;
 
-	token = strtok(string, delim);
+	token = strtk(string, delim);
 	return (token);
 }
 
