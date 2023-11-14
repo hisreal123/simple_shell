@@ -15,6 +15,15 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 	int stat = 0, count = 0, num = 0;
 	char **arg;
 
+	arg = malloc(sizeof(char *) * 101);
+	if (arg == NULL)
+	{
+		free(arg);
+		free(args);
+		free(cmd);
+		return;
+	}
+
 	if (strcomp(args[0], "exit") == 0)
 	{
 		stat = atoi(args[1]);
@@ -28,18 +37,23 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv, char **envp)
 	if (strcomp(args[0], "cd") == 0)
 	{
 		chdir(args[1]);
+		free(arg);
 		return;
 	}
-	while (*args)
+	while (args[num] != NULL)
+	{
 		if (strcomp(args[num], ";") != 0)
 		{
-			arg[count] = args[num];
+			arg[count] = strdup(args[num]);
 			count++, num++;
 		}
 		else if (strcomp(args[num], ";") == 0)
 		{
+			arg[count] = NULL;
 			fork_child(arg, loop, cmd, argv, envp);
 			count = 0, num++;
 		}
+	}
+	arg[count] = NULL;
 	fork_child(arg, loop, cmd, argv, envp);
 }

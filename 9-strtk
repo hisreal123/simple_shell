@@ -13,25 +13,34 @@ char *strtk(char *str, const char *delim)
 	char *token;
 
 	if (!str)
-		str = oldtoken;
+	{
+		oldtoken = NULL;
+		return (NULL);
+	}
 
-	while (strchr(delim, *str) && *str)
+	if (str != oldtoken)
+		oldtoken = str;
+
+	printf("strtk: str = %s\n", str);
+
+	while (*str && strchr(delim, *str))
 		str++;
 
 	if (!*str)
+	{
+		oldtoken = NULL;
 		return (NULL);
+	}
 
 	token = str;
+
 	while (*token && !strchr(delim, *token))
 		token++;
 
 	if (*token)
-	{
 		*token = '\0';
-		oldtoken = token + 1;
-	}
 	else
-		token = NULL;
+		oldtoken = str + strlen(str);
 
-	return (str);
+	return (oldtoken);
 }
