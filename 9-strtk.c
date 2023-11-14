@@ -12,16 +12,16 @@ char *strtk(char *str, const char *delim)
 	static char *oldtoken = NULL;
 	char *token;
 
-	if (str == NULL)
+	if (!str)
 		str = oldtoken;
 
 	while (strchr(delim, *str) && *str)
 		str++;
 
-	if (*str == NULL)
+	if (!*str)
 		return (NULL);
 
-	*token = str;
+	token = str;
 	while (*token && !strchr(delim, *token))
 		token++;
 

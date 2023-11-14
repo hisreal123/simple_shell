@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * split_string - func to split a string
  * string: string to be split
@@ -20,11 +20,11 @@ int main(void)
 	char *split;
 
 	printf("%s\n", str);
-	split = split_string(str, " ");
+	split = strtk(str, " ");
 	while (split)
 	{
 		printf("%s\n", split);
-		split = split_string(NULL, " ");
+		split = strtk(NULL, " ");
 	}
 
 	return (0);
