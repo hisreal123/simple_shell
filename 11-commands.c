@@ -8,8 +8,9 @@
 
 int commands(char **arg)
 {
-	int stat = 0;
-	char **env, cwd;
+	int stat = 0, num = 0;
+	extern char **environ;
+	char **env = environ, cwd[100];
 
 	if (strcomp(arg[0], "exit") == 0)
 	{
@@ -24,16 +25,18 @@ int commands(char **arg)
 	}
 	if (strcomp(arg[0], "env") == 0)
 	{
-		get_env(env);
-		while(*env)
-			printf("%s\n", *env);
+		while(env[num] != NULL)
+		{
+			printf("%s\n", env[num]);
+			num++;
+		}
 		free(arg);
 		return (2);
 	}
-	if (strcomp(args[0], "pwd") == 0)
+	if (strcomp(arg[0], "pwd") == 0)
 	{
-		getwd(cwd);
-		printf("%s", cwd);
+		getcwd(cwd, sizeof(cwd));
+		printf("%s\n", cwd);
 		return (3);
 	}
 

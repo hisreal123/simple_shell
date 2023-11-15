@@ -12,7 +12,7 @@
 
 void fork_execute(int *loop, char **args, char *argv)
 {
-	int stat = 0, count = 0, num = 0;
+	int count = 0, num = 0;
 	char **arg;
 
 	arg = malloc(sizeof(char *) * 101);
@@ -34,7 +34,7 @@ void fork_execute(int *loop, char **args, char *argv)
 		{
 			arg[count] = NULL;
 			if (commands(arg) == 0)
-				fork_child(arg, loop, cmd, argv);
+				fork_child(arg, loop, argv);
 			count = 0, num++;
 		}
 	}

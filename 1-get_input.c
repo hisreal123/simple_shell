@@ -11,10 +11,10 @@
 int get_input(int *loop, char *argv)
 {
 	size_t read, count;
-	char *cmd = NULL, cwd;
+	char *cmd = NULL, cwd[100];
 
-	getwd(cwd);
-	printf("($Hell:%s) ", cwd);
+	getcwd(cwd, sizeof(cwd));
+	printf("$Hell:%s# ", cwd);
 
 	read = getlin(&cmd, &count, stdin);
 	if (read == (size_t)-1)
@@ -38,6 +38,6 @@ int get_input(int *loop, char *argv)
 		return (-1);
 	}
 
-	process_command(loop, argv);
+	process_command(loop, cmd, argv);
 	return (0);
 }

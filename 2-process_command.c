@@ -30,7 +30,7 @@ void process_command(int *loop, char *cmd, char *argv)
 		num++;
 	}
 	args[num] = NULL;
-	free(cmd);
 
 	fork_execute(loop, args, argv);
+	free(cmd);
 }

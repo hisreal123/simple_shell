@@ -9,9 +9,9 @@ void fork_child(char **arg, int *loop, char *argv)
 {
 	pid_t child;
 	int status = 0;
-	char **env;
+	extern char **environ;
+	char **env = environ;
 
-	env = get_env(env);
 	if (strcomp(arg[0], "ls") == 0)
 		arg[0] = "/bin/ls";
 

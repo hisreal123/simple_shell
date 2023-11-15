@@ -31,6 +31,6 @@ void non_interactive(char *argv, char **envp)
 	if (execve(args[0], args, envp) == -1)
 	{
 		printf("%s: 1: %s: not found\n", argv, args[0]);
-		exit();
+		exit(0);
 	}
 }

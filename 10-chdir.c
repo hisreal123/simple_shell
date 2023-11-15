@@ -9,11 +9,11 @@
 void _chdir(const char *path)
 {
 	static char *last = NULL;
-	char current = NULL;
+	char current[100];
 
-	getwd(current);
+	getcwd(current, sizeof(current));
 
-	if (strcomp(path, "-") == 0)
+	if (strcomp((char *)path, "-") == 0)
 	{
 		path = last;
 		chdir(path);
@@ -21,7 +21,7 @@ void _chdir(const char *path)
 		last = current;
 		return;
 	}
-	if (strcomp(path, "") == 0)
+	if (strcomp((char *)path, "") == 0)
 		path = "$HOME";
 
 	if (chdir(path) != 0)
@@ -31,5 +31,5 @@ void _chdir(const char *path)
 	}
 	else
 		chdir(path);
-	last = path;
+	last = (char *)path;
 }

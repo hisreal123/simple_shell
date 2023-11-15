@@ -8,7 +8,7 @@
 
 char **get_env(char **env)
 {
-	getenv(env);
+	getenv(*env);
 
 	return (env);
 }
