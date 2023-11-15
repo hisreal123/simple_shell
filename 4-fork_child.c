@@ -22,19 +22,30 @@ void fork_child(char **arg, char **args, char *cmd, int *loop, char *argv)
 	child = fork();
 	if (child == -1)
 		return;
-
 	else if (child > 0)
 		wait(&status);
-
 	else
 	{
-		if (execve(arg[0], arg, env) == -1)
+		if (arg[0][0] != '/')
 		{
-			printf("%s: %d: %s: no such file or directory\n", argv, *loop, arg[0]);
-			free(arg);
-			free(args);
-			free(cmd);
-			kill(getpid(), SIGTERM);
+			if (execve(arg[0], arg, env) == -1)
+			{
+				printf("%s: %d: %s: no such file or directory\n", argv, *loop, arg[0]);
+				free(arg);
+				free(args);
+				free(cmd);
+				kill(getpid(), SIGTERM);
+			}
+		}
+		else
+		{
+			if (execve(arg[0], arg, env) == -1)
+			{
+				perror("execve");				free(arg);
+				free(args);
+				free(cmd);
+				kill(getpid(), SIGTERM);
+			}
 		}
 	}
 }
