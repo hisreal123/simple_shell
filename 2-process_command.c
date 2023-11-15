@@ -13,7 +13,7 @@ void process_command(int *loop, char *cmd, char *argv)
 	char *token = NULL, **args = NULL;
 	int num = 0;
 
-	args = (char **)malloc(sizeof(char *) * 100);
+	args = (char **)malloc(sizeof(char *) * 1024);
 	if (args == NULL)
 	{
 		free(args);
@@ -31,5 +31,6 @@ void process_command(int *loop, char *cmd, char *argv)
 	args[num] = NULL;
 
 	fork_execute(loop, args, argv);
+	free(args);
 	free(cmd);
 }

@@ -36,4 +36,5 @@ void fork_child(char **arg, int *loop, char *argv)
 			kill(getpid(), SIGTERM);
 		}
 	}
+	free(arg);
 }

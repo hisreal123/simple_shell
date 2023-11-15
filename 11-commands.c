@@ -14,6 +14,7 @@ int commands(char **arg)
 	if (strcomp(arg[0], "exit") == 0)
 	{
 		stat = atoi(arg[1]);
+		free(arg);
 		exit(stat);
 	}
 	if (strcomp(arg[0], "cd") == 0)

@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	{
 		for (;; loop++)
 		{
-			getcwd(cwd, sizeof(cwd));
+			getcwd(cwd, 100);
 			printf("$Hell:%s# ", cwd);
 			check = get_input(&loop, argv[0]);
 
