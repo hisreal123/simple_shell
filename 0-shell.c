@@ -4,11 +4,10 @@
  * main - creating a new shell
  * @argc: argument count
  * @argv: argument vectors
- * @envp: environment vector
- * Return: 0 if it ends, -1 to stop
+ * Return: 0 at the end
 */
 
-int main(int argc, char *argv[], char *envp[])
+int main(int argc, char *argv[])
 {
 	int check = 0, loop = 1;
 	char cwd[100];
@@ -27,6 +26,9 @@ int main(int argc, char *argv[], char *envp[])
 	}
 
 	else
-		non_interactive(argv[argc - 1], envp);
+	{
+			check = get_input(&loop, argv[argc - 1]);
+	}
+
 	return (0);
 }
