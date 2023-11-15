@@ -8,7 +8,7 @@
 
 char *strdup_(const char *str)
 {
-	int x = 0, y = 0, num = 0;
+	int x = 0, num = 0;
 	char *nstr;
 
 	if (str == NULL)
@@ -31,12 +31,13 @@ char *strdup_(const char *str)
 /**
  * fork_execute - function to make child and execute command
  * @loop: number of times the program has run
+ * @cmd: command line array
  * @args: command array
  * @argv: pathname used to call shell
  * Return: 0 on success, -1 if foced exit
 */
 
-void fork_execute(int *loop, char **args, char *argv)
+void fork_execute(int *loop, char *cmd, char **args, char *argv)
 {
 	int count = 0, num = 0;
 	char **arg;
@@ -45,7 +46,6 @@ void fork_execute(int *loop, char **args, char *argv)
 	if (arg == NULL)
 	{
 		free(arg);
-		free(args);
 		return;
 	}
 
@@ -53,18 +53,19 @@ void fork_execute(int *loop, char **args, char *argv)
 	{
 		if (strcomp(args[num], ";") != 0)
 		{
-			arg[count] = strdup_(args[num]);
+			arg[count] = args[num];
 			count++, num++;
 		}
 		else if (strcomp(args[num], ";") == 0)
 		{
 			arg[count] = NULL;
-			if (commands(arg) == 0)
-				fork_child(arg, loop, argv);
+			if (commands(arg, args, cmd) == 0)
+				fork_child(arg, args, cmd, loop, argv);
 			count = 0, num++;
 		}
 	}
 	arg[count] = NULL;
-	if (commands(arg) == 0)
-		fork_child(arg, loop, argv);
+	if (commands(arg, args, cmd) == 0)
+		fork_child(arg, args, cmd, loop, argv);
+	free(arg);
 }
