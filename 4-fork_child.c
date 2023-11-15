@@ -2,6 +2,9 @@
 
 /**
  * fork_child - function to execute child process
+ * @arg: passed argument
+ * @loop: number of times program has run
+ * @argv: command used to call shell
  * Return: empty
 */
 
@@ -9,7 +12,6 @@ void fork_child(char **arg, int *loop, char *argv)
 {
 	pid_t child;
 	int status = 0;
-	extern char **environ;
 	char **env = environ;
 
 	if (strcomp(arg[0], "ls") == 0)
@@ -29,8 +31,7 @@ void fork_child(char **arg, int *loop, char *argv)
 	{
 		if (execve(arg[0], arg, env) == -1)
 		{
-			printf("%s: %d: %s: no such file or "
-					"directory\n", argv, *loop, arg[0]);
+			printf("%s: %d: %s: no such file or directory\n", argv, *loop, arg[0]);
 			free(arg);
 			kill(getpid(), SIGTERM);
 		}

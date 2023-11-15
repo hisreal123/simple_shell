@@ -4,7 +4,7 @@
  * getlin - custom getline function
  * @mem: buffer to store line in
  * @len: length of line
- * line: line to be read
+ * @line: line to be read
  * Return: length of fline
  */
 
@@ -38,7 +38,7 @@ size_t getlin(char **mem, size_t *len, FILE *line)
 		}
 		(*mem)[count++] = (char)fed;
 
-		if(fed == '\n')
+		if (fed == '\n')
 			break;
 	}
 

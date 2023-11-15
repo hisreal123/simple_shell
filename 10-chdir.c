@@ -8,7 +8,7 @@
 
 void _chdir(const char *path)
 {
-	static char *last = NULL;
+	static char *last;
 	char current[100];
 
 	getcwd(current, sizeof(current));

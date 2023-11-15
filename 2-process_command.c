@@ -3,9 +3,8 @@
 /**
  * process_command - function to process input commands
  * @loop: number of times the program has run
- * @cmd: pointer to the input command
+ * @cmd: command passed
  * @argv: pathname used to call shell
- * @envp: environment
  * Return: 0 on success, -1 if forced exit
 */
 

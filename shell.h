@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
+extern char **environ;
+
 void fork_execute(int *loop, char **args, char *argv);
 void process_command(int *loop, char *cmd, char *argv);
 int get_input(int *loop, char *argv);

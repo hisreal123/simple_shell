@@ -9,7 +9,6 @@
 int commands(char **arg)
 {
 	int stat = 0, num = 0;
-	extern char **environ;
 	char **env = environ, cwd[100];
 
 	if (strcomp(arg[0], "exit") == 0)
@@ -25,7 +24,7 @@ int commands(char **arg)
 	}
 	if (strcomp(arg[0], "env") == 0)
 	{
-		while(env[num] != NULL)
+		while (env[num] != NULL)
 		{
 			printf("%s\n", env[num]);
 			num++;

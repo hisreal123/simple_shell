@@ -11,11 +11,14 @@
 int main(int argc, char *argv[], char *envp[])
 {
 	int check = 0, loop = 1;
+	char cwd[100];
 
 	if (isatty(STDIN_FILENO))
 	{
 		for (;; loop++)
 		{
+			getcwd(cwd, sizeof(cwd));
+			printf("$Hell:%s# ", cwd);
 			check = get_input(&loop, argv[0]);
 
 			if (check == -1)

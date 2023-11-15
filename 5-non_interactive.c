@@ -11,14 +11,14 @@ void non_interactive(char *argv, char **envp)
 {
 	char line[100], ch, *cmd, *args[100] = {NULL};
 	int index = 0;
-	long unsigned int num = 0;
+	unsigned long int num = 0;
 
 	while ((read(STDIN_FILENO, &ch, 1) == 1) && index < 99 && ch != '\n')
-			line[index++] = ch;
+		line[index++] = ch;
 	line[index] = '\0';
 
 	cmd = strtok(line, " ");
-	while(cmd && num < sizeof(args) / sizeof(args[0]) - 1)
+	while (cmd && num < sizeof(args) / sizeof(args[0]) - 1)
 	{
 		args[num] = cmd;
 		cmd = strtok(NULL, " ");
