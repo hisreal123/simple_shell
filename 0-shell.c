@@ -4,6 +4,7 @@
  * main - creating a new shell
  * @argc: argument count
  * @argv: argument vectors
+ * @envp: env
  * Return: 0 at the end
 */
 

@@ -2,12 +2,12 @@
 
 
 /**
- * nonin-commands - function to check for specific commands
+ * nonin_commands - function to check for specific commands
  * @arg: check it for commands
  * Return: 0 if no command executes, else
 */
 
-int nonin-commands(char **arg)
+int nonin_commands(char **arg)
 {
 	int stat = 0, num = 0;
 	char **env = environ, cwd[100];
@@ -73,7 +73,7 @@ void non_interactive(char *argv, char **envp)
 		return;
 	if (strcomp(args[0], "ls") == 0)
 		args[0] = "/bin/ls";
-	if (nonin-commands(arg) == 0)
+	if (nonin_commands(args) == 0)
 	{
 		if (execve(args[0], args, envp) == -1)
 		{
