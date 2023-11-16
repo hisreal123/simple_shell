@@ -17,8 +17,9 @@ char *strdup_(const char *str)
 	while (str[num] != '\0')
 		num++;
 
-	nstr = malloc(sizeof(char *) * num + 1);
+	nstr = malloc(sizeof(char *) * (num + 1));
 	if (nstr == NULL)
+		perror("Memory allocation error !!!");
 		return (NULL);
 
 	for (; x < num; x++)
@@ -42,7 +43,7 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv)
 	int count = 0, num = 0;
 	char **arg;
 
-	arg = malloc(sizeof(char *) * 1024);
+	arg = malloc(sizeof(char) * 1024);
 	if (arg == NULL)
 	{
 		free(arg);
