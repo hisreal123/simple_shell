@@ -59,13 +59,13 @@ void fork_execute(int *loop, char *cmd, char **args, char *argv)
 		else if (strcomp(args[num], ";") == 0)
 		{
 			arg[count] = NULL;
-			if (commands(arg, args, cmd) == 0)
+			if (commands(arg, args, cmd, loop, argv) == 0)
 				fork_child(arg, args, cmd, loop, argv);
 			count = 0, num++;
 		}
 	}
 	arg[count] = NULL;
-	if (commands(arg, args, cmd) == 0)
+	if (commands(arg, args, cmd, loop, argv) == 0)
 		fork_child(arg, args, cmd, loop, argv);
 	free(arg);
 }

@@ -10,19 +10,16 @@
 
 int main(int argc, char *argv[], char *envp[])
 {
-	int check = 0, loop = 1;
-	char cwd[100];
+	int check loop = 1;
+	char cwd[1024];
 
 	if (isatty(STDIN_FILENO))
 	{
 		for (;; loop++)
 		{
-			getcwd(cwd, 100);
+			getcwd(cwd, 1024);
 			printf("$Hell:%s# ", cwd);
-			check = get_input(&loop, argv[0]);
-
-			if (check == -1)
-				return (0);
+			get_input(&loop, argv[0]);
 		}
 	}
 
