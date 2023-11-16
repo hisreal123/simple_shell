@@ -49,8 +49,6 @@ int get_input(int *loop, char *argv)
 
 	if (cmd[read - 1] == '\n')
 		cmd[read - 1] = '\0';
-
-	trim_space(cmd);
 	if (stlen(cmd) == 0)
 	{
 		free(cmd);

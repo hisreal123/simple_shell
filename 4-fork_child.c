@@ -18,6 +18,8 @@ void fork_child(char **arg, char **args, char *cmd, int *loop, char *argv)
 
 	if (strcomp(arg[0], "ls") == 0)
 		arg[0] = "/bin/ls";
+	if (args[0] == NULL)
+		return;
 
 	child = fork();
 	if (child == -1)
@@ -26,27 +28,14 @@ void fork_child(char **arg, char **args, char *cmd, int *loop, char *argv)
 		wait(&status);
 	else
 	{
-		if (arg[0][0] != '/')
+		if (execve(arg[0], arg, env) == -1)
 		{
-			if (execve(arg[0], arg, env) == -1)
-			{
-				printf("%s: %d: %s: no such file or directory\n", argv, *loop, arg[0]);
-				free(arg);
-				free(args);
-				free(cmd);
-				kill(getpid(), SIGTERM);
-			}
-		}
-		else
-		{
-			if (execve(arg[0], arg, env) == -1)
-			{
-				perror("execve");
-				free(arg);
-				free(args);
-				free(cmd);
-				kill(getpid(), SIGTERM);
-			}
+			printf("%s: %d: %s: no such file or directory\n", argv, *loop, arg[0]);
+			free(arg);
+			free(args);
+			free(cmd);
+			kill(getpid(), SIGTERM);
 		}
 	}
+
 }
