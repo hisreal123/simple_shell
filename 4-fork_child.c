@@ -41,7 +41,8 @@ void fork_child(char **arg, char **args, char *cmd, int *loop, char *argv)
 		{
 			if (execve(arg[0], arg, env) == -1)
 			{
-				perror("execve");				free(arg);
+				perror("execve");
+				free(arg);
 				free(args);
 				free(cmd);
 				kill(getpid(), SIGTERM);

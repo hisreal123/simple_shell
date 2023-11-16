@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-
+#include <ctype.h>
 extern char **environ;
 
 void fork_execute(int *loop, char *cmd, char **args, char *argv);
@@ -24,7 +24,7 @@ void fork_child(char **arg, char **args, char *cmd, int *loop, char *argv);
 char *strtk(char *str, const char *delim);
 void _chdir(const char *path);
 int commands(char **arg, char **args, char *cmd);
-
+int stlen(char *str);
 
 
 #endif

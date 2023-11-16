@@ -9,6 +9,8 @@
 
 int strcomp(char *s1, char *s2)
 {
+	if (s1 == NULL || s2 == NULL)
+		return (-1);
 	while (*s1 != '\0' && *s1 == *s2)
 	{
 		s1++;

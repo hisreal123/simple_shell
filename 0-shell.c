@@ -7,7 +7,7 @@
  * Return: 0 at the end
 */
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char *envp[])
 {
 	int check = 0, loop = 1;
 	char cwd[100];
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
 	else
 	{
-			check = get_input(&loop, argv[argc - 1]);
+		non_interactive(argv[argc - 1], envp);
 	}
 
 	return (0);
