@@ -19,7 +19,7 @@ void fork_child(char **arg, char **args, char *cmd, int *loop, char *argv)
 	if (strcomp(arg[0], "ls") == 0)
 		arg[0] = "/bin/ls";
 	if (args[0] == NULL)
-		return;
+	return;
 
 	child = fork();
 	if (child == -1)
