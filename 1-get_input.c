@@ -44,7 +44,7 @@ int get_input(int *loop, char *argv)
 	if (read == (size_t)-1 || read == 0)
 	{
 		free(cmd);
-		return (0);
+		return;
 	}
 
 	if (cmd[read - 1] == '\n')
@@ -52,25 +52,24 @@ int get_input(int *loop, char *argv)
 	if (stlen(cmd) == 0)
 	{
 		free(cmd);
-		return (0);
+		return;
 	}
 
 	if (strcomp(cmd, "") == 0)
 	{
 		free(cmd);
-		return (0);
+		return;
 	}
 
 	if (strcomp(cmd, "exit") == 0)
 	{
 		free(cmd);
-		return (-1);
+		exit(0);
 	}
 	if (strcomp(cmd, " ") == 0)
 	{
 		free(cmd);
-		return (0);
+		return;
 	}
 	process_command(loop, cmd, argv);
-	return (0);
 }

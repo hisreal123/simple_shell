@@ -5,21 +5,28 @@
  * @arg: check it for commands
  * @args: main command argument
  * @cmd: command line array
+ * @loop: number of times the program has run
+ * @argv: command used to call shell
  * Return: 0 if no command executes, else
 */
 
-int commands(char **arg, char **args, char *cmd)
+int commands(char **arg, char **args, char *cmd, int *loop, char **argv)
 {
 	int stat = 0, num = 0;
 	char **env = environ, cwd[100];
 
 	if (strcomp(arg[0], "exit") == 0)
 	{
-		stat = atoi(arg[1]);
-		free(arg);
-		free(args);
-		free(cmd);
-		exit(stat);
+		stat = Ato1(arg[1]);
+		if (stat != -1)
+		{
+			free(arg);
+			free(args);
+			free(cmd);
+			exit(stat);
+		}
+		else
+		printf("%s: %d: exit: Illegal number %s", argv, *loop, arg[1]);
 	}
 	if (strcomp(arg[0], "cd") == 0)
 	{
@@ -41,6 +48,5 @@ int commands(char **arg, char **args, char *cmd)
 		printf("%s\n", cwd);
 		return (3);
 	}
-
 	return (0);
 }

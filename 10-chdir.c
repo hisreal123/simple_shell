@@ -9,16 +9,16 @@
 void _chdir(const char *path)
 {
 	static char *last;
-	char current[100];
+	char current[1024];
 
-	getcwd(current, sizeof(current));
+	getcwd(current, 1024);
 
 	if (strcomp((char *)path, "-") == 0)
 	{
-		path = last;
+		*path = *last;
 		chdir(path);
-		printf("%s\n", path);
-		last = current;
+		printf("%s\n", *path);
+		*last = *current;
 		return;
 	}
 	if (strcomp((char *)path, "") == 0)
@@ -31,5 +31,5 @@ void _chdir(const char *path)
 	}
 	else
 		chdir(path);
-	last = (char *)path;
+	*last = (char *)path;
 }
