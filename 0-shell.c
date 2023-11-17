@@ -10,7 +10,7 @@
 
 int main(int argc, char *argv[], char *envp[])
 {
-	int check loop = 1;
+	int loop = 1;
 	char cwd[1024];
 
 	if (isatty(STDIN_FILENO))

@@ -32,10 +32,10 @@ char *trim_space(char *str)
  * get_input - function to accept input commands
  * @loop: Number of times the program has run
  * @argv: pathname used to call shell
- * Return: 0 on success, -1 to end
+ * Return: empty, exit to quit program
 */
 
-int get_input(int *loop, char *argv)
+void get_input(int *loop, char *argv)
 {
 	size_t read, count;
 	char *cmd = NULL;
