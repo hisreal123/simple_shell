@@ -28,7 +28,7 @@ int contd(char **arg)
 	}
 	if (strcomp(arg[0], "unsetenv") == 0)
 	{
-		if (unsetenv(arg[0]) != 0)
+		if (unsetenv(arg[1]) != 0)
 		{
 			perror("unsetenv() failed");
 			return (0);
@@ -58,7 +58,10 @@ int nonin_commands(char **arg, char *argv)
 		if (stat != -1)
 			exit(stat);
 		else
+		{
 			printf("%s: 1: exit: Illegal number %s", argv, arg[1]);
+			return (4);
+		}
 	}
 	if (strcomp(arg[0], "cd") == 0)
 	{
@@ -96,6 +99,8 @@ void do_fork(char **arg, char *argv)
 
 	if (strcomp(arg[0], "ls") == 0)
 		arg[0] = "/bin/ls";
+	if (strcomp(arg[0], "cat") == 0)
+		arg[0] = "/bin/cat";
 
 	child = fork();
 	if (child == -1)

@@ -8,29 +8,37 @@
 
 void _chdir(const char *path)
 {
-	static char last[1024];
+	char *last;
 	char current[1024];
 
 	getcwd(current, 1024);
+	last = getenv("OLDPWD");
 
-	if (strcomp((char *)path, "-") == 0)
+	if (!path || path[0] == '\0')
+		path = getenv("HOME");
+	if (strcmp(path, "-") == 0)
 	{
-		chdir(last);
+		path = last;
+		if (chdir(path) != 0)
+		{
+			perror("chdir failed");
+			return;
+		}
+		printf("%s\n", path);
+		setenv("OLDPWD", current, 1);
 		getcwd(current, 1024);
 		setenv("PWD", current, 1);
-		printf("%s\n", current);
-		strcpy(last, current);
 		return;
 	}
-	if (path == NULL)
-		path = "$HOME";
 
 	if (chdir(path) != 0)
 	{
+		perror("chdir failed");
 		printf("directory does not exist\n");
 		return;
 	}
-	strcpy(last, current);
+
+	setenv("OLDPWD", current, 1);
 	getcwd(current, 1024);
 	setenv("PWD", current, 1);
 }
