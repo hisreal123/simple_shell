@@ -13,17 +13,19 @@ int nonin_commands(char **arg)
 
 	char **env = environ, cwd[100];
 
-	if (strcomp(arg[0], "exit") == 0)
+	if (strcmp(arg[0], "exit") == 0)
 	{
 		stat = atoi(arg[1]);
 		exit(stat);
 	}
-	if (strcomp(arg[0], "cd") == 0)
+
+	if (strcmp(arg[0], "cd") == 0)
 	{
 		_chdir(arg[1]);
 		return (1);
 	}
-	if (strcomp(arg[0], "env") == 0)
+
+	if (strcmp(arg[0], "env") == 0)
 	{
 		while (env[num] != NULL)
 		{
@@ -33,7 +35,7 @@ int nonin_commands(char **arg)
 		return (2);
 	}
 
-	if (strcomp(arg[0], "pwd") == 0)
+	if (strcmp(arg[0], "pwd") == 0)
 	{
 		getcwd(cwd, 100);
 		printf("%s\n", cwd);
@@ -42,8 +44,6 @@ int nonin_commands(char **arg)
 
 	return (0);
 }
-
-
 
 
 /**
@@ -59,22 +59,26 @@ void non_interactive(char *argv, char **envp)
 
 	int index = 0;
 
-	unsigned long int num = 0;
+	unsigned long int num , i = 0;
 
 	while ((read(STDIN_FILENO, &ch, 1) == 1) && index < 99 && ch != '\n')
 		line[index++] = ch;
+
 	line[index] = '\0';
 
 	cmd = strtok(line, " ");
 	while (cmd && num < sizeof(args) / sizeof(args[0]) - 1)
 	{
-		args[num] = strdup(cmd); /* strdup allocates memory for the string**/
+		args[num] = strdup(cmd);
 
 		if (args[num] == NULL)
 		{
 			fprintf(stderr, "Memory allocation error: Cannot allocate memory\n");
-			for (int i = 0; i < num; i++)
+
+
+			while (i < num)
 			{
+				i++;
 				free(args[i]);
 			}
 			return;
@@ -84,15 +88,17 @@ void non_interactive(char *argv, char **envp)
 		num++;
 	}
 
-	if (strcomp(args[0], "ls") == 0)
+	if (strcmp(args[0], "ls") == 0)
 		args[0] = "/bin/ls";
 
 	if (nonin_commands(args) == 0)
 	{
 		if (execve(args[0], args, envp) == -1)
 		{
+			perror("execve");
 			printf("%s: 1: %s: not found\n", argv, args[0]);
 		}
 	}
+
 	exit(0);
 }

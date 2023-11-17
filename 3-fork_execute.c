@@ -1,14 +1,15 @@
 #include "shell.h"
 
 /**
- * strdup_ - custom strdup function
- * @str: string to duplicate
- * Return: duplicated string, else null
+* strdup_ - custom strdup function
+* @str: string to duplicate
+* Return: duplicated string, else null
 */
 
 char *strdup_(const char *str)
 {
 	int x = 0, num = 0;
+
 	char *nstr;
 
 	if (str == NULL)
@@ -18,9 +19,12 @@ char *strdup_(const char *str)
 		num++;
 
 	nstr = malloc(sizeof(char *) * (num + 1));
+
 	if (nstr == NULL)
+	{
 		perror("Memory allocation error !!!");
 		return (NULL);
+	}
 
 	for (; x < num; x++)
 		nstr[x] = str[x];
@@ -30,17 +34,19 @@ char *strdup_(const char *str)
 }
 
 /**
- * fork_execute - function to make child and execute command
- * @loop: number of times the program has run
- * @cmd: command line array
- * @args: command array
- * @argv: pathname used to call shell
- * Return: 0 on success, -1 if foced exit
+* fork_execute - function to make child and execute command
+* @loop: number of times the program has run
+* @cmd: command line array
+* @args: command array
+* @argv: pathname used to call shell
+* Return: 0 on success, -1 if foced exit
+*  ls /var ; ls /hbtn ; ls /var ; ls /var
 */
 
 void fork_execute(int *loop, char *cmd, char **args, char *argv)
 {
 	int count = 0, num = 0;
+
 	char **arg;
 
 	arg = malloc(sizeof(char) * 1024);
