@@ -7,7 +7,7 @@
  * Return: 0 if no command executes, else
 */
 
-int nonin_commands(char **arg, char **argv)
+int nonin_commands(char **arg, char *argv)
 {
 	int stat = 0, num = 0;
 	char **env = environ, cwd[100];
@@ -52,7 +52,7 @@ int nonin_commands(char **arg, char **argv)
  * Return: empty
 */
 
-void do_fork(char **arg, char **argv, char **envp)
+void do_fork(char **arg, char *argv, char **envp)
 {
 	if (strcomp(arg[0], "ls") == 0)
 		arg[0] = "/bin/ls";
