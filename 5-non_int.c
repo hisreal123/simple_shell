@@ -119,12 +119,17 @@ void do_fork(char **arg, char *argv)
 
 void non_interactive(char *argv)
 {
-	char line[100], ch, *cmd, *args[1024] = {NULL}, *arg[1024] = {NULL};
-	int index = 0, x = 0, y = 0;
+	char line[1024] = {NULL}, *cmd, *args[1024] = {NULL}, *arg[1024] = {NULL};
+	int x = 0, y = 0;
 	unsigned long int num = 0;
-
-	while ((read(STDIN_FILENO, &ch, 1) == 1) && index < 99 && ch != '\n')
-		line[index++] = ch;
+	size_t read, index;
+/**
+ *	while ((read(STDIN_FILENO, &ch, 1) == 1) && index < 99 && ch != '\n')
+ *		line[index++] = ch;
+*/
+	read = getlin(&line, &index, stdin);
+	if (read == (size_t)-1 || read == 0)
+		return;
 	line[index] = '\0';
 	if (strcmp(line, "exit") == 0)
 		exit(0);

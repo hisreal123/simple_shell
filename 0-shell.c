@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
 
 	else
 	{
-		non_interactive(argv[argc - 1]);
+		for (;;)
+			non_interactive(argv[argc - 1]);
 	}
 
 	return (0);
