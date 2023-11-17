@@ -81,5 +81,5 @@ void non_interactive(char *argv, char **envp)
 			exit(0);
 		}
 	}
-	exit(0);
+		exit(0);
 }
