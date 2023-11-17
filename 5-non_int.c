@@ -19,22 +19,16 @@ int contd(char **arg)
 	if (strcomp(arg[0], "setenv") == 0)
 	{
 		if (setenv(arg[1], arg[2], 1) != 0)
-		{
 			perror("setenv() failed");
-			return (0);
-		}
-		else
-			return (1);
+
+		return (1);
 	}
 	if (strcomp(arg[0], "unsetenv") == 0)
 	{
 		if (unsetenv(arg[1]) != 0)
-		{
 			perror("unsetenv() failed");
-			return (0);
-		}
-		else
-			return (1);
+
+		return (1);
 	}
 
 	return (0);
@@ -154,7 +148,7 @@ void non_interactive(char *argv)
 		else if (strcomp(args[y], ";") == 0)
 		{
 			arg[x] = NULL;
-			if (nonin_commands(arg, argv))
+			if (nonin_commands(arg, argv) == 0)
 				do_fork(arg, argv);
 			x = 0, y++;
 		}
