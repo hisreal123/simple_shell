@@ -17,7 +17,7 @@ extern char **environ;
 void fork_execute(int *loop, char *cmd, char **args, char *argv);
 void process_command(int *loop, char *cmd, char *argv);
 void get_input(int *loop, char *argv);
-void non_interactive(char *argv, char **envp);
+void non_interactive(char *argv);
 char **get_env(char **env);
 int strcomp(char *s1, char *s2);
 int exit_status(char *value);

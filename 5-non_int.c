@@ -1,6 +1,46 @@
 #include "shell.h"
 
 /**
+ * contd - check for more commands
+ * @arg: comand
+ * Return: 1 if a command executes, else 0
+ */
+
+int contd(char **arg)
+{
+	char cwd[100];
+
+	if (strcomp(arg[0], "pwd") == 0)
+	{
+		getcwd(cwd, 100);
+		printf("%s\n", cwd);
+		return (1);
+	}
+	if (strcomp(arg[0], "setenv") == 0)
+	{
+		if (setenv(arg[1], arg[2], 1) != 0)
+		{
+			perror("setenv() failed");
+			return (0);
+		}
+		else
+			return (1);
+	}
+	if (strcomp(arg[0], "unsetenv") == 0)
+	{
+		if (unsetenv(arg[0]) != 0)
+		{
+			perror("unsetenv() failed");
+			return (0);
+		}
+		else
+			return (1);
+	}
+
+	return (0);
+}
+
+/**
  * nonin_commands - function to check for specific commands
  * @arg: check it for commands
  * @argv: command used to call shell
@@ -10,7 +50,7 @@
 int nonin_commands(char **arg, char *argv)
 {
 	int stat = 0, num = 0;
-	char **env = environ, cwd[100];
+	char **env = environ;
 
 	if (strcomp(arg[0], "exit") == 0)
 	{
@@ -34,44 +74,51 @@ int nonin_commands(char **arg, char *argv)
 		}
 		return (2);
 	}
-	if (strcomp(arg[0], "pwd") == 0)
-	{
-		getcwd(cwd, 100);
-		printf("%s\n", cwd);
-		return (3);
-	}
 
-	return (0);
+	if (contd(arg) == 0)
+		return (0);
+	else
+		return (3);
 }
 
 /**
  * do_fork - func to fork commands
  * @arg: command to execute
  * @argv: command used to call shell
- * @envp: environment
  * Return: empty
 */
 
-void do_fork(char **arg, char *argv, char **envp)
+void do_fork(char **arg, char *argv)
 {
+	int status;
+	pid_t child;
+	char **env = environ;
+
 	if (strcomp(arg[0], "ls") == 0)
 		arg[0] = "/bin/ls";
 
-	if (execve(arg[0], arg, envp) == -1)
+	child = fork();
+	if (child == -1)
+		return;
+	else if (child > 0)
+		wait(&status);
+	else
 	{
-		printf("%s: 1: %s: not found\n", argv, arg[0]);
-		exit(0);
+		if (execve(arg[0], arg, env) == -1)
+		{
+			printf("%s: 1: %s: not found\n", argv, arg[0]);
+			kill(getpid(), SIGTERM);
+		}
 	}
 }
 
 /**
  * non_interactive - function to process non-in commands
- * @envp: passed environment
  * @argv: pathname used to call shell
  * Return: empty
 */
 
-void non_interactive(char *argv, char **envp)
+void non_interactive(char *argv)
 {
 	char line[100], ch, *cmd, *args[1024] = {NULL}, *arg[1024] = {NULL};
 	int index = 0, x = 0, y = 0;
@@ -103,12 +150,12 @@ void non_interactive(char *argv, char **envp)
 		{
 			arg[x] = NULL;
 			if (nonin_commands(arg, argv))
-				do_fork(arg, argv, envp);
+				do_fork(arg, argv);
 			x = 0, y++;
 		}
 	}
 	arg[x] = NULL;
 	if (nonin_commands(arg, argv) == 0)
-		do_fork(arg, argv, envp);
+		do_fork(arg, argv);
 	exit(0);
 }
