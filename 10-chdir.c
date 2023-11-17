@@ -1,60 +1,51 @@
 #include "shell.h"
 
 /**
- * _chdir - Change the current working directory.
- * @path: Directory path to change to.
- *
- * Return: void
- *
- * This function changes the current working directory to the specified path.
- * If the path is NULL or empty, it defaults to the home directory.
- * Supports switching to the previous directory using "-" and handles errors,
- * providing informative messages for non-existent directories.
- */
+* _chdir - function to change directory
+* @path: directory path
+* Return: empty
+*/
 
 
 void _chdir(const char *path)
 {
-    static char *last = NULL;
+	static char *last;
 
-    char current[100];
+	char current[100];
 
-    if (!path || path[0] == '\0')
-        path = getenv("HOME");
+	getcwd(current, sizeof(current));
 
-    if (strcmp(path, "-") == 0)
-    {
-        if (!last)
-        {
-            printf("No previous directory stored.\n");
-            return;
-        }
+	if (!path || path[0] == '\0')
+		path = getenv("HOME");
 
-        path = last;
-        if (chdir(path) != 0)
-        {
-            perror("chdir");
-            return;
-        }
+	if (strcmp(path, "-") == 0)
+	{
+		path = last;
+		if (chdir(path) != 0)
+		{
+			perror("chdir");
+			return;
+		}
+		printf("%s\n", path);
 
-        printf("%s\n", path);
-        free(last);
-        last = strdup(current);
-        return;
-    }
+		setenv("PWD", current, 1);
 
-    if (chdir(path) != 0)
-    {
-        perror("chdir");
-        printf("Directory '%s' does not exist.\n", path);
-        return;
-    }
+		free(last);
+		last = strdup(current);
+		return;
+	}
 
-    if (getcwd(current, sizeof(current)) == NULL)
-    {
-        perror("getcwd");
-        return;
-    }
+	if (chdir(path) != 0)
+	{
+		perror("chdir");
+		return;
+	}
 
-    last = strdup(current);
+
+	free(last);
+	last = strdup(current);
+
+	setenv("PWD", getcwd(current, sizeof(current)), 1);
 }
+
+

@@ -10,7 +10,10 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <ctype.h>
+
+
 extern char **environ;
+extern char *lastDir;
 
 void fork_execute(int *loop, char *cmd, char **args, char *argv);
 void process_command(int *loop, char *cmd, char *argv);
