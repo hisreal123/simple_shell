@@ -4,11 +4,10 @@
  * main - creating a new shell
  * @argc: argument count
  * @argv: argument vectors
- * @envp: env
  * Return: 0 at the end
 */
 
-int main(int argc, char *argv[], char *envp[])
+int main(int argc, char *argv[])
 {
 	int loop = 1;
 	char cwd[1024];
@@ -25,7 +24,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	else
 	{
-		non_interactive(argv[argc - 1], envp);
+		non_interactive(argv[argc - 1]);
 	}
 
 	return (0);

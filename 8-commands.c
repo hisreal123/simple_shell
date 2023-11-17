@@ -19,22 +19,16 @@ int more(char **arg)
 	if (strcomp(arg[0], "setenv") == 0)
 	{
 		if (setenv(arg[1], arg[2], 1) != 0)
-		{
 			perror("setenv() failed");
-			return (0);
-		}
-		else
-			return (1);
+
+		return (1);
 	}
 	if (strcomp(arg[0], "unsetenv") == 0)
 	{
-		if (unsetenv(arg[0]) != 0)
-		{
+		if (unsetenv(arg[1]) != 0)
 			perror("unsetenv() failed");
-			return (0);
-		}
-		else
-			return (1);
+
+		return (1);
 	}
 
 	return (0);
